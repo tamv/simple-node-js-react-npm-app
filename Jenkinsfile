@@ -40,7 +40,7 @@ pipeline {
         echo 'build app docker image'
 
         script {
-          docker.build("zen-app:${env.BUILD_ID}", "-f Dockerfile.app")
+          docker.build("zen-app:${env.BUILD_ID}", ".", "-f Dockerfile.app")
         }
       }
     }
