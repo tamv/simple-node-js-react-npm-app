@@ -1,0 +1,17 @@
+name: Create Review App
+
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  trigger-jenkins:
+    name: "Trigger Jenkins to Teardown Review Apps"
+    runs-on: ubuntu-latest
+    steps:
+    - uses: appleboy/jenkins-action@master
+      with:
+        url: "https://f8439ce43691.ngrok.io"
+        user: "admin"
+        token: "111961147904242c264d4276e67ab77928"
+        job: "review-app-teardown"
