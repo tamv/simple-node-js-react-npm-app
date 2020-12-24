@@ -8,7 +8,8 @@ on:
       - master
 
 jobs:
-  build:
+  build-image:
+    name: "Build Docker Images"
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -16,7 +17,7 @@ jobs:
       with:
         node-version: '12'
     - name: "npm run clean install"
-      run: npm run ci
+      run: npm ci
     - name: "build docker"
-      run: docker build -t app-demo:latest -f ./Dockerfile.api
+      run: docker build -t app-demo:${{ github.event.number }} -f ./Dockerfile.api
     # - run: npm run clean
