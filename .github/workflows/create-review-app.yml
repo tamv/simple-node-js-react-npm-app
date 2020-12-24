@@ -15,4 +15,8 @@ jobs:
     - uses: actions/setup-node@v2
       with:
         node-version: '12'
+    - name: "npm run clean install"
+      run: npm run ci
+    - name: "build docker"
+      run: docker build -t app-demo:latest -f ./Dockerfile.api
     # - run: npm run clean
