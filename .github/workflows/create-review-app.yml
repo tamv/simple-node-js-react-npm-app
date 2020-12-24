@@ -19,5 +19,5 @@ jobs:
     - name: "npm run clean install"
       run: npm ci
     - name: "build docker"
-      run: docker build -t app-demo:${{ github.event.number }} -f ./Dockerfile.api
+      run: docker build -t app-demo:latest -f ./Dockerfile.api
     # - run: npm run clean
