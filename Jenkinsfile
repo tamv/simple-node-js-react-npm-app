@@ -40,7 +40,10 @@ pipeline {
         echo 'build app docker image'
 
         script {
-          docker.build("zen-app:${env.BUILD_ID}", "-f Dockerfile.app")
+          def img = docker.build("zen-app", "-f Dockerfile.app")
+          docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
+            img.push()
+        }
         }
       }
     }
