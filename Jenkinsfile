@@ -35,30 +35,29 @@ pipeline {
       }
     }
 
-    stage('Publish Docker Images') {
-      parallel {
-        stage('Publish API Images') {
-          steps {
-            echo 'publishing Zen API images'
-            script {
-              docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
-                apiImage.push("latest")
-              }
-            }
-          }
-        }
-        stage('Publish App Images') {
-          steps {
-            echo 'publishing Zen APP images'
-            script {
-              docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
-                appImage.push("latest")
-              }
-            }
-          }
-        }
-      }
-
-    }
+    // stage('Publish Docker Images') {
+    //   parallel {
+    //     stage('Publish API Images') {
+    //       steps {
+    //         echo 'publishing Zen API images'
+    //         script {
+    //           docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
+    //             apiImage.push("latest")
+    //           }
+    //         }
+    //       }
+    //     }
+    //     stage('Publish App Images') {
+    //       steps {
+    //         echo 'publishing Zen APP images'
+    //         script {
+    //           docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
+    //             appImage.push("latest")
+    //           }
+    //         }
+    //       }
+    //     }
+    //   }
+    // }
   }
 }
