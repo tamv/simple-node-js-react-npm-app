@@ -1,48 +1,64 @@
 pipeline {
   agent any
- 
-  tools {nodejs "node-12.18.4"}
-
+  tools {nodejs "node-12.18.3"}
   environment {
     CI = 'true'
+    apiImage = ''
+    appImage = ''
   }
 
   stages {
     stage('Git Checkout') {
       steps {
-        git 'https://github.com/tamv/simple-node-js-react-npm-app.git'
-      }
-    }
-    
-    stage('Install NPM') {
-      steps {
-          sh 'npm ci'
+        git branch: "${PR_BRANCH}", changelog: false, poll: false, url: 'https://github.com/zensurance/zen.git'
       }
     }
 
-    stage('Build & Test') {
+    stage('Build Docker Images') {
       parallel {
-        stage('Build web application') {
+        stage('Build API Images') {
           steps {
-            sh 'npm run build'
+            echo 'building Zen API images'
+            script {
+              apiImage = docker.build("zensurance/api", "-f dockerfile.api .")
+            }
           }
         }
-        stage('run test') {
+        stage('Build APP Images') {
           steps {
-            sh 'npm run test'
+            echo 'building Zen APP images'
+            script {
+              appImage = docker.build("zensurance/app", "-f dockerfile.app .")
+            }
           }
         }
       }
     }
 
-    stage('Build Docker Image') {
-      steps {
-        echo 'build app docker image'
-
-        script {
-          docker.build("zen-app:${env.BUILD_ID}", "-f Dockerfile.app .")
+    stage('Publish Docker Images') {
+      parallel {
+        stage('Publish API Images') {
+          steps {
+            echo 'publishing Zen API images'
+            script {
+              docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
+                apiImage.push("latest")
+              }
+            }
+          }
+        }
+        stage('Publish App Images') {
+          steps {
+            echo 'publishing Zen APP images'
+            script {
+              docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
+                appImage.push("latest")
+              }
+            }
+          }
         }
       }
+
     }
   }
 }
