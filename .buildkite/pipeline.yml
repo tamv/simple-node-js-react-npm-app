@@ -1,4 +1,4 @@
 steps:
   - label: ":hammer: Example Script"
     command:
-      - "source ~/.bashrc"
+      - "cat ~/.bashrc"
