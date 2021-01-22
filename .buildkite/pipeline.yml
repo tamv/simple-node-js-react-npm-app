@@ -4,4 +4,4 @@ steps:
       - "cat ~/.bashrc"
       - "cd $HOME"
       - "cd $HOME/.nvm"
-      - "nvm.sh -v"
+      - "nvm -v"
