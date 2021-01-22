@@ -1,6 +1,4 @@
 steps:
   - label: ":hammer: Example Script"
     command:
-      - "cd $HOME"
-      - "cd $HOME/.nvm"
-      - "./nvm -v"
+      - "nvm -v"
