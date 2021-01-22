@@ -3,3 +3,4 @@ steps:
     command:
       - "cat ~/.bashrc"
       - "cd $HOME"
+      - "cat $HOME/.nvm/nvm.sh"
