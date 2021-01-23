@@ -1,5 +1,5 @@
 steps:
   - label: ":hammer: Example Script"
     command:
-      - "curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash"
-      - "nvm -v"
+      - "PATH=$PATH:~/.nvm"
+      - "nvm --version"
